@@ -29,11 +29,7 @@ var triviaGame = {
 
     // prevents the clock from being sped up unnecessarily
     clockRunning: false,
-    number: 30,
-
-    initialize: function () {
-
-    },
+    time: 30,
 
 
     populateQuestions: function () {
@@ -53,11 +49,13 @@ var triviaGame = {
             choiceButton.addClass("btn btn-primary");
             choiceButton.text(options[i]);
             choiceButton.attr('id', "choice-button" + [i]);
-            choiceButton.attr('onclick', "triviaGame.checkAnswers()");
             choiceButton.attr('value', answer[i]);
             // console.log(choiceButton);
             $("#multiple-choice").append(choiceButton);
+            choiceButton.on('click', this.checkAnswers.bind(this));
         }
+
+
         this.run();
         this.globalIndex++;
     },
@@ -65,7 +63,7 @@ var triviaGame = {
     checkAnswers: function () {
 
         console.log("IN THE CLICK FUNCTION");
-        // HAVE TO ADD THE BIND FUNCTION HERE???? ------------------------------------
+
         console.log($(this).val());
         var clickedValue = $(this).val();
         if (clickedValue == 1) {
@@ -92,33 +90,70 @@ var triviaGame = {
 
 
     run: function () {
+
         // if the timer is not on we set it
         if (!this.clockRunning) {
-            intervalId = setInterval(this.decrement, 1000);
+            intervalId = setInterval(this.count, 1000);
             // we keep track of the interval through this flag
             clockRunning = true;
         }
 
     },
 
-    decrement: function () {
-        if (this.number === 0) {
+    // decrement: function () {
+    //     if (this.time === 0) {
 
-            stop();
+    //         stop();
 
-            alert("Time Up!");
-        }
-        else {
-            this.number--;
-            console.log(this.number);
-            $("#show-number").html("<h2>" + this.number + "</h2>");
-        }
+    //         alert("Time Up!");
+    //     }
+    //     else {
+    //         this.time--;
+    //         console.log(this.time);
+    //         // $("#show-number").html("<h2>" + this.number + "</h2>");
+            
+    //     }
 
-    },
+    // },
 
     stop: function () {
         clearInterval(intervalId);
         timerOn = false;
+    },
+    count: function() {
+        console.log("TIME TEST IN POPULATE QUESTIONS: " + this.time); //DOESNT GRAB time. ---------------------
+
+
+        //  TODO: increment time by 1, remember we cant use "this" here.
+        this.time--;
+      
+        //  TODO: Get the current time, pass that into the timeConverter function,
+        //        and save the result in a variable.
+        currentTime = triviaGame.timeConverter(this.time);
+      
+        //  TODO: Use the variable you just created to show the converted time in the "display" div.
+        $("#timeDisplay").text(currentTime);
+      },
+
+    timeConverter: function (t) {
+
+        //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+        var minutes = Math.floor(t / 60);
+        var seconds = t - (minutes * 60);
+
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+
+        if (minutes === 0) {
+            minutes = "00";
+        }
+
+        else if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+
+        return minutes + ":" + seconds;
     },
 
 };
