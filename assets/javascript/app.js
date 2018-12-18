@@ -20,6 +20,9 @@ var triviaGame = {
 
 
     globalIndex: 0,
+    correct: 0,
+    incorrect: 0,
+    noAnswer: 0,
 
     initialize: function () {
 
@@ -40,13 +43,35 @@ var triviaGame = {
         for (var i = 0; i < options.length; i++) {
 
             var choiceButton = $("<button>");
-            choiceButton.addClass("btn btn-primary");
+            choiceButton.addClass("btn btn-primary animated fadeInDown");
             choiceButton.text(options[i]);
+            choiceButton.attr('id', "choice-button" + [i]);
+            choiceButton.attr('onclick', "triviaGame.checkAnswers()");
             choiceButton.attr('value', answer[i]);
             // console.log(choiceButton);
             $("#multiple-choice").append(choiceButton);
         }
         this.globalIndex++;
+    },
+
+    checkAnswers: function () {
+
+        console.log("IN THE CLICK FUNCTION");
+        // HAVE TO ADD THE BIND FUNCTION HERE???? ------------------------------------
+        console.log($(this).val());
+        var clickedValue = $(this).val();
+        if (clickedValue == 1) {
+            correct++;
+            populateQuestions();
+        }
+        else if (clickedValue == 0) {
+            incorrect++;
+            populateQuestions();
+        }
+        else {
+            noAnswer++;
+        }
+
     },
 
     clearForm: function () {
