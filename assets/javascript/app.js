@@ -43,7 +43,7 @@ var triviaGame = {
         for (var i = 0; i < options.length; i++) {
 
             var choiceButton = $("<button>");
-            choiceButton.addClass("btn btn-primary animated fadeInDown");
+            choiceButton.addClass("btn btn-primary");
             choiceButton.text(options[i]);
             choiceButton.attr('id', "choice-button" + [i]);
             choiceButton.attr('onclick', "triviaGame.checkAnswers()");

@@ -27,20 +27,25 @@
     <div class="container">
         <h1>Trivia Game!</h1>
         <div id="instructions">
-            Welcome to the Totally Trivia game. Please click the start button to kick things off. You will have 30
-            seconds
-            to answer each question.
-            We will keep track of your correct, incorrect, and missed answers. Good luck!
+            <h4>
+                Welcome to the Totally Trivia game. Please click the start button to kick things off. You will have 30
+                seconds
+                to answer each question.
+                We will keep track of your correct, incorrect, and missed answers. Good luck!
+
+            </h4>
         </div>
-        <div id="multiple-choice">
+        <div id="multiple-choice" class="col col-md-3">
 
         </div>
 
         <button onclick="start()" id="start-button" type="button" class="btn btn-success">START!</button>
 
 
-        <div id="question-area">
-
+        <div id="score-area" style="display: none">
+            <h4>Correct Answers: <span id="correctAnswers"></span></h4>
+            <h4>Incorrect Answers: <span id="incorrectAnswers"></span></h4>
+            <h4>No Response: <span id="noAnswers"></span></h4>
         </div>
 
     </div>
