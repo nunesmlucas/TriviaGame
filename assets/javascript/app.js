@@ -24,6 +24,13 @@ var triviaGame = {
     incorrect: 0,
     noAnswer: 0,
 
+    //  Variable that will hold our setInterval that runs the stopwatch
+    intervalId: -1,
+
+    // prevents the clock from being sped up unnecessarily
+    clockRunning: false,
+    number: 30,
+
     initialize: function () {
 
     },
@@ -51,6 +58,7 @@ var triviaGame = {
             // console.log(choiceButton);
             $("#multiple-choice").append(choiceButton);
         }
+        this.run();
         this.globalIndex++;
     },
 
@@ -79,6 +87,40 @@ var triviaGame = {
         $("#multiple-choice").empty();
 
     },
+
+
+
+
+    run: function () {
+        // if the timer is not on we set it
+        if (!this.clockRunning) {
+            intervalId = setInterval(this.decrement, 1000);
+            // we keep track of the interval through this flag
+            clockRunning = true;
+        }
+
+    },
+
+    decrement: function () {
+        if (this.number === 0) {
+
+            stop();
+
+            alert("Time Up!");
+        }
+        else {
+            this.number--;
+            console.log(this.number);
+            $("#show-number").html("<h2>" + this.number + "</h2>");
+        }
+
+    },
+
+    stop: function () {
+        clearInterval(intervalId);
+        timerOn = false;
+    },
+
 };
 
 function start() {
