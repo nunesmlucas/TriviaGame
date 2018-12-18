@@ -32,8 +32,7 @@ var triviaGame = {
     time: 30,
 
 
-    populateQuestions: function () {
-
+    populateQuestions: function (event) {
         console.log("in Populate questions");
         question = this.questions[this.globalIndex].question;
         answer = this.questions[this.globalIndex].answer;
@@ -60,19 +59,24 @@ var triviaGame = {
         this.globalIndex++;
     },
 
-    checkAnswers: function () {
+    checkAnswers: function (event) {
 
         console.log("IN THE CLICK FUNCTION");
-
-        console.log($(this).val());
-        var clickedValue = $(this).val();
+        console.log({
+            game: this,
+            clickedThing: event.target
+        })
+        console.log($(event.target).val());
+        var clickedValue = $(event.target).val();
         if (clickedValue == 1) {
-            correct++;
-            populateQuestions();
+            this.correct++;
+            this.clearForm();
+            this.populateQuestions(event);
         }
         else if (clickedValue == 0) {
-            incorrect++;
-            populateQuestions();
+            this.incorrect++;
+            this.clearForm();
+            this.populateQuestions(event);
         }
         else {
             noAnswer++;
@@ -93,7 +97,7 @@ var triviaGame = {
 
         // if the timer is not on we set it
         if (!this.clockRunning) {
-            intervalId = setInterval(this.count, 1000);
+            intervalId = setInterval(this.count.bind(this), 1000);
             // we keep track of the interval through this flag
             clockRunning = true;
         }
@@ -121,7 +125,8 @@ var triviaGame = {
         timerOn = false;
     },
     count: function() {
-        console.log("TIME TEST IN POPULATE QUESTIONS: " + this.time); //DOESNT GRAB time. ---------------------
+
+        console.log("TIME TEST: " + this.time); //DOESNT GRAB time. ---------------------
 
 
         //  TODO: increment time by 1, remember we cant use "this" here.
