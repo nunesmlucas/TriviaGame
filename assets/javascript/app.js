@@ -77,28 +77,35 @@ var triviaGame = {
 
 
     populateQuestions: function (event) {
-        console.log("in Populate questions");
-        question = this.questions[this.globalIndex].question;
-        answer = this.questions[this.globalIndex].answer;
-
-        var tempholder = document.getElementById("instructions");
-        tempholder.textContent = question;
-
-        var options = this.questions[this.globalIndex].choices;
-
-        for (var i = 0; i < options.length; i++) {
-
-            var choiceButton = $("<button>");
-            choiceButton.addClass("btn btn-primary");
-            choiceButton.text(options[i]);
-            choiceButton.attr('id', "choice-button" + [i]);
-            choiceButton.attr('value', answer[i]);
-            // console.log(choiceButton);
-            $("#multiple-choice").append(choiceButton);
-            choiceButton.on('click', this.checkAnswers.bind(this));
+        if (this.counter == 10) {
+            this.clearForm();
+            this.stop();
+            this.finalResults();
         }
-        this.run();
-        this.globalIndex++;
+        else {
+            console.log("in Populate questions");
+            question = this.questions[this.globalIndex].question;
+            answer = this.questions[this.globalIndex].answer;
+
+            var tempholder = document.getElementById("instructions");
+            tempholder.textContent = question;
+
+            var options = this.questions[this.globalIndex].choices;
+
+            for (var i = 0; i < options.length; i++) {
+
+                var choiceButton = $("<button>");
+                choiceButton.addClass("btn btn-primary");
+                choiceButton.text(options[i]);
+                choiceButton.attr('id', "choice-button" + [i]);
+                choiceButton.attr('value', answer[i]);
+                // console.log(choiceButton);
+                $("#multiple-choice").append(choiceButton);
+                choiceButton.on('click', this.checkAnswers.bind(this));
+            }
+            this.run();
+            this.globalIndex++;
+        }
     },
 
     checkAnswers: function (event) {
@@ -109,38 +116,43 @@ var triviaGame = {
             clickedThing: event.target
         })
         console.log($(event.target).val());
-        if (this.counter == 9) {
-            this.clearForm();
-            this.stop();
-            this.finalResults();
-        }
-        else {
-            var clickedValue = $(event.target).val();
-            if (clickedValue == 1) {
-                this.correct++;
-                this.counter++;
-                this.stop();
-                this.clearForm();
-                this.populateQuestions(event);
-            }
-            else if (clickedValue == 0) {
-                this.stop();
-                this.incorrect++;
-                this.counter++;
-                this.clearForm();
-                this.populateQuestions(event);
-            }
-            else {
-                noAnswer++;
-                this.counter++;
 
-            }
-        };
+        var clickedValue = $(event.target).val();
+        if (clickedValue == 1) {
+            this.correct++;
+            this.counter++;
+            this.stop();
+            this.clearForm();
+            this.populateQuestions(event);
+        }
+        else if (clickedValue == 0) {
+            this.stop();
+            this.incorrect++;
+            this.counter++;
+            this.clearForm();
+            this.populateQuestions(event);
+        }
+        //MIGHT NOT HAVE TO BE HERE? MAYBE IN THE POPULATE QUESTIONS 
+        // "IF NOT CLICKED" DO THIS: .... 
+        else{
+            this.stop();
+            this.noAnswer++;
+            this.counter++;
+            console.log(this.noAnswer);
+
+            this.clearForm();
+            this.populateQuestions(event);
+
+        }
     },
 
     finalResults: function () {
-        $("#instructions").text("TEXT TEST HERE");
-
+        $("#instructions").text("DRUM ROLL PLEASE!.... Let's see how you did. ");
+        $("#score-area").show();
+        $("#correctAnswers").text(this.correct);
+        $("#incorrectAnswers").text(this.incorrect);
+        $("#noAnswers").text(this.noAnswer);
+        $("#timeDisplay").hide();
     },
 
     clearForm: function () {
@@ -226,5 +238,4 @@ function start() {
     triviaGame.clearForm();
     triviaGame.populateQuestions();
 };
-
 
