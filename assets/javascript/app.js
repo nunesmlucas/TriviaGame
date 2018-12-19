@@ -110,7 +110,7 @@ var triviaGame = {
 
     checkAnswers: function (event) {
 
-        console.log("IN THE CLICK FUNCTION");
+        console.log("IN THE CHECK ANSWERS FUNCTION");
         console.log({
             game: this,
             clickedThing: event.target
@@ -132,18 +132,6 @@ var triviaGame = {
             this.clearForm();
             this.populateQuestions(event);
         }
-        //MIGHT NOT HAVE TO BE HERE? MAYBE IN THE POPULATE QUESTIONS 
-        // "IF NOT CLICKED" DO THIS: .... 
-        else{
-            this.stop();
-            this.noAnswer++;
-            this.counter++;
-            console.log(this.noAnswer);
-
-            this.clearForm();
-            this.populateQuestions(event);
-
-        }
     },
 
     finalResults: function () {
@@ -160,11 +148,7 @@ var triviaGame = {
         $("#instructions").text("");
         $("#multiple-choice").empty();
         this.time = 30;
-
     },
-
-
-
 
     run: function () {
 
@@ -195,6 +179,11 @@ var triviaGame = {
             this.stop();
 
             alert("Time Up!");
+
+            console.log("IN THE NON CLICK");
+            this.noAnswer++;
+            this.counter++;
+            console.log(this.noAnswer);
 
             this.clearForm();
             this.populateQuestions();
