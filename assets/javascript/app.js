@@ -15,6 +15,50 @@ var triviaGame = {
                 question: "What is the capital of United States?",
                 choices: ["California", "New York", "Miami", "Florida"],
                 answer: [1, 0, 0, 0]
+            },
+            {
+                question: "What is the capital of United Kingdom?",
+                choices: ["Manchester", "Birmingham", "London", "Birmingham"],
+                answer: [0, 1, 0, 0]
+            },
+
+            {
+                question: "What is the capital of United States?",
+                choices: ["California", "New York", "Miami", "Florida"],
+                answer: [1, 0, 0, 0]
+            },
+            {
+                question: "What is the capital of United Kingdom?",
+                choices: ["Manchester", "Birmingham", "London", "Birmingham"],
+                answer: [0, 1, 0, 0]
+            },
+
+            {
+                question: "What is the capital of United States?",
+                choices: ["California", "New York", "Miami", "Florida"],
+                answer: [1, 0, 0, 0]
+            },
+            {
+                question: "What is the capital of United Kingdom?",
+                choices: ["Manchester", "Birmingham", "London", "Birmingham"],
+                answer: [0, 1, 0, 0]
+            },
+
+            {
+                question: "What is the capital of United States?",
+                choices: ["California", "New York", "Miami", "Florida"],
+                answer: [1, 0, 0, 0]
+            },
+            {
+                question: "What is the capital of United Kingdom?",
+                choices: ["Manchester", "Birmingham", "London", "Birmingham"],
+                answer: [0, 1, 0, 0]
+            },
+
+            {
+                question: "What is the capital of United States?",
+                choices: ["California", "New York", "Miami", "Florida"],
+                answer: [1, 0, 0, 0]
             }
         ],
 
@@ -53,8 +97,6 @@ var triviaGame = {
             $("#multiple-choice").append(choiceButton);
             choiceButton.on('click', this.checkAnswers.bind(this));
         }
-
-
         this.run();
         this.globalIndex++;
     },
@@ -67,26 +109,45 @@ var triviaGame = {
             clickedThing: event.target
         })
         console.log($(event.target).val());
-        var clickedValue = $(event.target).val();
-        if (clickedValue == 1) {
-            this.correct++;
+        if (this.counter == 9) {
             this.clearForm();
-            this.populateQuestions(event);
-        }
-        else if (clickedValue == 0) {
-            this.incorrect++;
-            this.clearForm();
-            this.populateQuestions(event);
+            this.stop();
+            this.finalResults();
         }
         else {
-            noAnswer++;
-        }
+            var clickedValue = $(event.target).val();
+            if (clickedValue == 1) {
+                this.correct++;
+                this.counter++;
+                this.stop();
+                this.clearForm();
+                this.populateQuestions(event);
+            }
+            else if (clickedValue == 0) {
+                this.stop();
+                this.incorrect++;
+                this.counter++;
+                this.clearForm();
+                this.populateQuestions(event);
+            }
+            else {
+                noAnswer++;
+                this.counter++;
+
+            }
+        };
+    },
+
+    finalResults: function () {
+        $("#instructions").text("TEXT TEST HERE");
 
     },
 
     clearForm: function () {
+        // this.stop();
         $("#instructions").text("");
         $("#multiple-choice").empty();
+        this.time = 30;
 
     },
 
@@ -104,41 +165,37 @@ var triviaGame = {
 
     },
 
-    // decrement: function () {
-    //     if (this.time === 0) {
-
-    //         stop();
-
-    //         alert("Time Up!");
-    //     }
-    //     else {
-    //         this.time--;
-    //         console.log(this.time);
-    //         // $("#show-number").html("<h2>" + this.number + "</h2>");
-            
-    //     }
-
-    // },
-
     stop: function () {
+        console.log("STOP");
         clearInterval(intervalId);
         timerOn = false;
     },
-    count: function() {
+    count: function () {
 
         console.log("TIME TEST: " + this.time); //DOESNT GRAB time. ---------------------
 
 
         //  TODO: increment time by 1, remember we cant use "this" here.
         this.time--;
-      
+
+        if (this.time === 0) {
+
+            this.stop();
+
+            alert("Time Up!");
+
+            this.clearForm();
+            this.populateQuestions();
+
+        }
+
         //  TODO: Get the current time, pass that into the timeConverter function,
         //        and save the result in a variable.
         currentTime = triviaGame.timeConverter(this.time);
-      
+
         //  TODO: Use the variable you just created to show the converted time in the "display" div.
         $("#timeDisplay").text(currentTime);
-      },
+    },
 
     timeConverter: function (t) {
 
