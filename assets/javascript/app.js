@@ -110,11 +110,11 @@ var triviaGame = {
 
     checkAnswers: function (event) {
 
-        console.log("IN THE CHECK ANSWERS FUNCTION");
-        console.log({
-            game: this,
-            clickedThing: event.target
-        })
+        // console.log("IN THE CHECK ANSWERS FUNCTION");
+        // console.log({
+        //     game: this,
+        //     clickedThing: event.target
+        // })
         console.log($(event.target).val());
 
         var clickedValue = $(event.target).val();
@@ -122,8 +122,18 @@ var triviaGame = {
             this.correct++;
             this.counter++;
             this.stop();
+
+            // setTimeout(function (event) {
             this.clearForm();
+            console.log("after clear form");
             this.populateQuestions(event);
+            // }, 3000);
+
+            // this.clearForm();
+            // console.log("after clear form");
+            // this.populateQuestions(event);
+
+
         }
         else if (clickedValue == 0) {
             this.stop();
@@ -144,7 +154,6 @@ var triviaGame = {
     },
 
     clearForm: function () {
-        // this.stop();
         $("#instructions").text("");
         $("#multiple-choice").empty();
         this.time = 30;
@@ -177,8 +186,8 @@ var triviaGame = {
         if (this.time === 0) {
 
             this.stop();
-
-            alert("Time Up!");
+            // INSERT THE RIGHT ANSWER AND DELAY HERE -----------
+            alert("Times up!");
 
             console.log("IN THE NON CLICK");
             this.noAnswer++;
@@ -217,7 +226,7 @@ var triviaGame = {
         }
 
         return minutes + ":" + seconds;
-    },
+    }
 
 };
 
@@ -226,5 +235,18 @@ function start() {
     console.log("IN START");
     triviaGame.clearForm();
     triviaGame.populateQuestions();
+};
+function restart() {
+//WONT RESET -------
+    console.log("IN RESTART");
+    $("#score-area").hide();
+    $("#correctAnswers").text("");
+    $("#incorrectAnswers").text("");
+    $("#noAnswers").text("");
+    $("#timeDisplay").show();
+    triviaGame.clearForm();
+    triviaGame.populateQuestions();
+    console.log("bs....");
+
 };
 
