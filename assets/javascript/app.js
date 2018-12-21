@@ -117,31 +117,42 @@ var triviaGame = {
         // })
         console.log($(event.target).val());
 
+        var gifResponse = $("#gif-response");
+
         var clickedValue = $(event.target).val();
+
         if (clickedValue == 1) {
             this.correct++;
             this.counter++;
             this.stop();
-            clickedValue.
-            // SET UP TIMER FUNCTION TO DELAY IMAGE HERE ----------------
+            this.clearForm();
+            console.log(this);
+            gifResponse.show();
+            console.log("We're right here!");
+
             setTimeout(function (event) {
+                gifResponse.hide();
                 this.clearForm();
                 console.log("after clear form");
                 this.populateQuestions(event);
-            }, 3000);
-
-            // this.clearForm();
-            // console.log("after clear form");
-            // this.populateQuestions(event);
-
+            }.bind(this), 3000);
 
         }
         else if (clickedValue == 0) {
+
             this.stop();
             this.incorrect++;
             this.counter++;
             this.clearForm();
-            this.populateQuestions(event);
+
+            gifResponse.show();
+
+
+            setTimeout(function (event) {
+                gifResponse.hide();
+                this.clearForm();
+                this.populateQuestions(event);
+            }.bind(this), 3000);
         }
     },
 
@@ -178,7 +189,8 @@ var triviaGame = {
     },
     count: function () {
 
-        console.log("TIME TEST: " + this.time); //DOESNT GRAB time. ---------------------
+        console.log("TIME TEST: " + this.time);
+        var gifResponse = $("#gif-response");
 
 
         //  TODO: increment time by 1, remember we cant use "this" here.
@@ -187,16 +199,24 @@ var triviaGame = {
         if (this.time === 0) {
 
             this.stop();
-            // INSERT THE RIGHT ANSWER AND DELAY HERE -----------
+
             alert("Times up!");
+            this.clearForm();
 
             console.log("IN THE NON CLICK");
+
+            gifResponse.show();
+
+
             this.noAnswer++;
             this.counter++;
             console.log(this.noAnswer);
+            setTimeout(function (event) {
+                gifResponse.hide();
+                this.clearForm();
+                this.populateQuestions();
+            }.bind(this), 3000);
 
-            this.clearForm();
-            this.populateQuestions();
 
         }
 
@@ -238,6 +258,7 @@ function start() {
     console.log("IN START");
     triviaGame.clearForm();
     triviaGame.populateQuestions();
+
 };
 function restart() {
     //WONT RESET -------
@@ -247,9 +268,6 @@ function restart() {
     $("#incorrectAnswers").text("");
     $("#noAnswers").text("");
     $("#timeDisplay").show();
-    // triviaGame.clearForm();
-    // triviaGame.populateQuestions();
-    // console.log("bs....");
     triviaGame = $.extend(true, {}, template);
     start();
 };
