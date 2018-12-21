@@ -122,12 +122,13 @@ var triviaGame = {
             this.correct++;
             this.counter++;
             this.stop();
-
-            // setTimeout(function (event) {
-            this.clearForm();
-            console.log("after clear form");
-            this.populateQuestions(event);
-            // }, 3000);
+            clickedValue.
+            // SET UP TIMER FUNCTION TO DELAY IMAGE HERE ----------------
+            setTimeout(function (event) {
+                this.clearForm();
+                console.log("after clear form");
+                this.populateQuestions(event);
+            }, 3000);
 
             // this.clearForm();
             // console.log("after clear form");
@@ -230,6 +231,8 @@ var triviaGame = {
 
 };
 
+var template = $.extend(true, {}, triviaGame);
+
 function start() {
     $('#start-button').remove();
     console.log("IN START");
@@ -237,16 +240,17 @@ function start() {
     triviaGame.populateQuestions();
 };
 function restart() {
-//WONT RESET -------
+    //WONT RESET -------
     console.log("IN RESTART");
     $("#score-area").hide();
     $("#correctAnswers").text("");
     $("#incorrectAnswers").text("");
     $("#noAnswers").text("");
     $("#timeDisplay").show();
-    triviaGame.clearForm();
-    triviaGame.populateQuestions();
-    console.log("bs....");
-
+    // triviaGame.clearForm();
+    // triviaGame.populateQuestions();
+    // console.log("bs....");
+    triviaGame = $.extend(true, {}, template);
+    start();
 };
 
