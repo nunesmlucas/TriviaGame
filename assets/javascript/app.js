@@ -13,35 +13,35 @@ var triviaGame = {
 
             {
                 question: "What is the capital of United States?",
-                choices: ["California", "New York", "Miami", "Florida"],
+                choices: ["Washington DC", "New York", "Miami", "Florida"],
                 answer: [1, 0, 0, 0]
             },
             {
-                question: "What is the capital of United Kingdom?",
-                choices: ["Manchester", "Birmingham", "London", "Birmingham"],
+                question: "How the Grinch Stole Christmas is a 2000 American Christmas fantasy comedy film starring which actor as the Grinch?",
+                choices: ["Tom Hanks", "Jim Carrey", "Nicholas Cage", "Robert Downey Jr."],
                 answer: [0, 1, 0, 0]
             },
 
             {
-                question: "What is the capital of United States?",
-                choices: ["California", "New York", "Miami", "Florida"],
+                question: 'In which Disney film do two cats sing “The Siamese Cat Song"?',
+                choices: ["Lady and the Tramp", "Fantasia", "Cats vs Dogs", "Peter Pan"],
                 answer: [1, 0, 0, 0]
             },
             {
-                question: "What is the capital of United Kingdom?",
-                choices: ["Manchester", "Birmingham", "London", "Birmingham"],
+                question: "In what city would you find the Wizard of Oz?",
+                choices: ["The Diamond City", "The Emerald City", "The Sapphire City", "The Ruby City"],
                 answer: [0, 1, 0, 0]
             },
 
             {
-                question: "What is the capital of United States?",
-                choices: ["California", "New York", "Miami", "Florida"],
+                question: "What is Shawshank, in the movie The Shawshank Redemption?",
+                choices: ["The Prison", "A Knife", "A Person", "The Town"],
                 answer: [1, 0, 0, 0]
             },
             {
-                question: "What is the capital of United Kingdom?",
-                choices: ["Manchester", "Birmingham", "London", "Birmingham"],
-                answer: [0, 1, 0, 0]
+                question: "The song “Eye of the Tiger” by the band Survivor was the theme song for what movie released in 1982?",
+                choices: ["Rocky I", "Rocky II", "Rocky III", "Creed"],
+                answer: [0, 0, 1, 0]
             },
 
             {
@@ -117,7 +117,9 @@ var triviaGame = {
         // })
         console.log($(event.target).val());
 
-        var gifResponse = $("#gif-response");
+        var gifResponseWrong = $("#gif-response-wrong");
+        var gifResponseRight = $("#gif-response-right");
+
 
         var clickedValue = $(event.target).val();
 
@@ -127,15 +129,15 @@ var triviaGame = {
             this.stop();
             this.clearForm();
             console.log(this);
-            gifResponse.show();
+            gifResponseRight.show();
             console.log("We're right here!");
 
             setTimeout(function (event) {
-                gifResponse.hide();
+                gifResponseRight.hide();
                 this.clearForm();
                 console.log("after clear form");
                 this.populateQuestions(event);
-            }.bind(this), 3000);
+            }.bind(this), 2000);
 
         }
         else if (clickedValue == 0) {
@@ -145,14 +147,14 @@ var triviaGame = {
             this.counter++;
             this.clearForm();
 
-            gifResponse.show();
+            gifResponseWrong.show();
 
 
             setTimeout(function (event) {
-                gifResponse.hide();
+                gifResponseWrong.hide();
                 this.clearForm();
                 this.populateQuestions(event);
-            }.bind(this), 3000);
+            }.bind(this), 2000);
         }
     },
 
@@ -190,7 +192,7 @@ var triviaGame = {
     count: function () {
 
         console.log("TIME TEST: " + this.time);
-        var gifResponse = $("#gif-response");
+        var gifResponseWrong = $("#gif-respons-wrong");
 
 
         //  TODO: increment time by 1, remember we cant use "this" here.
@@ -205,17 +207,17 @@ var triviaGame = {
 
             console.log("IN THE NON CLICK");
 
-            gifResponse.show();
+            gifResponseWrong.show();
 
 
             this.noAnswer++;
             this.counter++;
             console.log(this.noAnswer);
             setTimeout(function (event) {
-                gifResponse.hide();
+                gifResponseWrong.hide();
                 this.clearForm();
                 this.populateQuestions();
-            }.bind(this), 3000);
+            }.bind(this), 2000);
 
 
         }
