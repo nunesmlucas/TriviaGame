@@ -137,7 +137,7 @@ var triviaGame = {
                 this.clearForm();
                 console.log("after clear form");
                 this.populateQuestions(event);
-            }.bind(this), 2000);
+            }.bind(this), 3500);
 
         }
         else if (clickedValue == 0) {
@@ -192,7 +192,7 @@ var triviaGame = {
     count: function () {
 
         console.log("TIME TEST: " + this.time);
-        var gifResponseWrong = $("#gif-respons-wrong");
+        var gifResponseWrong = $("#gif-response-wrong");
 
 
         //  TODO: increment time by 1, remember we cant use "this" here.
